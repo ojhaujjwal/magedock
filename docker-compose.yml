@@ -1,0 +1,104 @@
+version: '2'
+
+services:
+
+### Workspace Utilities Container ###########################
+
+    workspace:
+        build:
+            context: ./workspace
+            args:
+                - CRON=false
+                - INSTALL_XDEBUG=false
+                - INSTALL_NODE=false
+                - COMPOSER_GLOBAL_INSTALL=false
+                - PUID=1000
+                - PGID=1000
+                - MAGENTO_ROOT
+        volumes_from:
+            - volumes_source
+        volumes:
+            - ./logs/magento/:${MAGENTO_ROOT}/var/log
+            - ./data/backups/:${MAGENTO_ROOT}/var/backups
+            - ${SSH_AUTH_SOCK}:/ssh-agent # Forward local machine SSH key to docker
+        tty: true
+        env_file:
+          - ./global.env
+          - ./local.env     
+        environment:
+            SSH_AUTH_SOCK: /ssh-agent               
+
+### PHP-FPM Container #######################################
+
+    php-fpm:
+        build:
+            context: ./php-fpm
+            args:
+                - INSTALL_XDEBUG=false
+                - MAGENTO_ROOT
+        volumes_from:
+            - volumes_source
+        expose:
+            - "9000"
+        links:
+            - workspace
+        env_file:
+          - ./global.env
+          - ./local.env
+
+### Nginx Server Container ##################################
+
+    nginx:
+        build:
+            context: ./nginx
+            args:
+                - PHP_UPSTREAM=php-fpm
+                - PUID=1000
+                - PGID=1000
+                - MAGENTO_ROOT
+        volumes_from:
+            - volumes_source
+        volumes:
+            - ./logs/nginx/:/var/log/nginx
+        ports:
+            - "80:80"
+            - "443:443"
+        links:
+            - php-fpm
+        env_file:
+          - ./global.env
+          - ./local.env
+
+### MySQL Container #########################################
+
+    mysql:
+        build: ./mysql
+        volumes_from:
+            - volumes_data
+        ports:
+            - "3306:3306"
+        env_file:
+          - ./global.env
+          - ./local.env
+
+### Redis Container #########################################
+
+    redis:
+        image: redis:3.2-alpine
+        volumes_from:
+            - volumes_data
+
+### Magento2 Application Code Container ######################
+
+    volumes_source:
+        build: ./volumes/application
+        volumes:
+            - "${MAGENTO_HOST_SOURCE}/:${MAGENTO_ROOT}"
+
+### Databases Data Container ################################
+
+    volumes_data:
+        build: ./volumes/data
+        volumes:
+            - ./data/mysql:/var/lib/mysql
+            - ./data/redis:/data

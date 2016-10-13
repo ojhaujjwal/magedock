@@ -1,0 +1,6 @@
+/logs
+/data
+/local.env
+/docker-compose.local.yml
+/redis.conf
+/.idea

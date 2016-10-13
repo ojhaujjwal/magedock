@@ -1,0 +1,9 @@
+#!/bin/bash
+
+##This script is a shortcut to run magento command into workspace container as "magento" user
+
+#Move to docker-compose root directory
+cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
+
+#Run magento command on workspace container
+bin/workspace magento $*

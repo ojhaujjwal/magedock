@@ -1,0 +1,22 @@
+#!/bin/bash
+
+##This script is a shortcut to bash into workspace container as "magento" user
+## or to directly exec on the container as "magento" user
+
+##Example:
+## Running workspace => bash into workspace as 'magento' user
+## Running workspace magento=> Run command 'magento' as 'magento' user
+## Running workspace composer install=> Run command 'composer install' as 'magento' user
+
+#Move to docker-compose root directory
+cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
+
+ARG="$*"
+if [ $# -eq 0 ]
+  then
+    # No arguments supplied
+    ARG="bash"
+fi
+
+#Bash into the container
+docker-compose exec --user=magento workspace $ARG

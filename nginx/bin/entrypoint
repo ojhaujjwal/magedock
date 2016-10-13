@@ -1,0 +1,10 @@
+#!/bin/ash
+
+[ "$DEBUG" = "true" ] && set -x
+
+sed -i "s%MAGENTO_ROOT%${MAGENTO_ROOT}%g" /etc/nginx/conf.d/magento.conf
+sed -i "s/VIRTUAL_HOST/${VIRTUAL_HOST}/" /etc/nginx/conf.d/magento.conf
+sed -i "s/MAGENTO_RUN_MODE/${MAGENTO_RUN_MODE}/" /etc/nginx/conf.d/magento.conf
+sed -i "s/PHP_MEMORY_LIMIT/${PHP_MEMORY_LIMIT}/" /etc/nginx/conf.d/magento.conf
+
+exec "$@"

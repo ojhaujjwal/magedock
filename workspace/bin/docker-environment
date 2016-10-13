@@ -1,0 +1,29 @@
+#!/bin/bash
+
+[ "$DEBUG" = "true" ] && set -x
+
+# Ensure our Magento directory exists
+mkdir -p $MAGENTO_ROOT
+chown -R magento:magento $MAGENTO_ROOT
+
+#Ensure writable directory exists
+#for enabling write permission on the group
+mkdir -p $MAGENTO_ROOT/var/
+mkdir -p $MAGENTO_ROOT/pub/media/
+mkdir -p $MAGENTO_ROOT/pub/static/
+
+
+find . -type d -exec chmod 750 {} +
+chmod -R 770 ${MAGENTO_ROOT}/var/
+chmod 770 ${MAGENTO_ROOT}/app/etc/
+chmod -R 770 ${MAGENTO_ROOT}/pub/media/
+chmod -R 770 ${MAGENTO_ROOT}/pub/static/
+
+# Configure composer
+[ ! -z "${COMPOSER_GITHUB_TOKEN}" ] && \
+    /sbin/setuser magento composer config --global "github-oauth.github.com" $COMPOSER_GITHUB_TOKEN
+
+[ ! -z "${COMPOSER_MAGENTO_USERNAME}" ] && \
+    /sbin/setuser magento composer config --global "http-basic.repo.magento.com" $COMPOSER_MAGENTO_USERNAME $COMPOSER_MAGENTO_PASSWORD
+
+exec "$@"

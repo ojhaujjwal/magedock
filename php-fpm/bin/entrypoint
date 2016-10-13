@@ -1,0 +1,13 @@
+#!/bin/bash
+
+[ "$DEBUG" = "true" ] && set -x
+
+if [ $MAGENTO_RUN_MODE = "developer" ]; then
+   sed -i "s/DISPLAY_ERRORS/On/" /usr/local/etc/php/conf.d/magento.ini
+   sed -i "s/OPCACHE_ENABLE/0/" /usr/local/etc/php/conf.d/magento.ini
+else
+   sed -i "s/DISPLAY_ERRORS/Off/" /usr/local/etc/php/conf.d/magento.ini
+   sed -i "s/OPCACHE_ENABLE/1/" /usr/local/etc/php/conf.d/magento.ini
+fi
+
+exec "$@"

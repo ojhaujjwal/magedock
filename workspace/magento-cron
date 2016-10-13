@@ -1,0 +1,5 @@
+MAILTO=""
+* * * * * magento /usr/bin/php MAGENTO_ROOT/bin/magento-php cron:run | grep -v "Ran jobs by schedule" >> MAGENTO_ROOT/var/log/magento.cron.log
+* * * * * magento /usr/bin/php MAGENTO_ROOT/update/cron.php >> MAGENTO_ROOT/var/log/update.cron.log
+* * * * * magento /usr/bin/php MAGENTO_ROOT/bin/magento-php setup:cron:run >> MAGENTO_ROOT/var/log/setup.cron.log
+0 0 * * * magento /usr/bin/php MAGENTO_ROOT/bin/magento-php setup:backup --db >> MAGENTO_ROOT/var/log/backup.cron.log
