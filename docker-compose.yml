@@ -91,14 +91,14 @@ services:
 ### Magento2 Application Code Container ######################
 
     volumes_source:
-        build: ./volumes/application
+        image: tianon/true
         volumes:
             - "${MAGENTO_HOST_SOURCE}/:${MAGENTO_ROOT}"
 
 ### Databases Data Container ################################
 
     volumes_data:
-        build: ./volumes/data
+        image: tianon/true
         volumes:
             - ./data/mysql:/var/lib/mysql
             - ./data/redis:/data
