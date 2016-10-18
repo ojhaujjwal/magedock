@@ -14,7 +14,7 @@ FROM ojhaujjwal/magento-php-fpm:latest
 # Optional Software's will only be installed if you set them to `true`
 # in the `docker-compose.yml` before the build.
 #
-#   - INSTALL_MONGO=            false
+#   - INSTALL_XDEBUG=            false
 #
 
 #####################################
