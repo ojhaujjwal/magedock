@@ -16,4 +16,5 @@ git submodule add https://github.com/ojhaujjwal/magedock.git
 3. Enter the magedock folder and run only these Containers: 
 <br>
 `docker-compose up -d nginx mysql redis`
-4. Open your browser and visit the localhost: `http://localhost`
+4. docker-compose exec workspace magento-installer
+5. Open your browser and visit the localhost: `http://localhost`
