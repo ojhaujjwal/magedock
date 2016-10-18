@@ -26,7 +26,6 @@ RUN apt-get update && \
 # in the `docker-compose.yml` before the build.
 #
 #   - INSTALL_XDEBUG=           false
-#   - INSTALL_MONGO=            false
 #   - COMPOSER_GLOBAL_INSTALL=  false
 #   - INSTALL_NODE=             false
 #
