@@ -38,8 +38,6 @@ services:
                 - MAGENTO_ROOT
         volumes_from:
             - volumes_source
-        expose:
-            - "9000"
         links:
             - workspace
         env_file:
