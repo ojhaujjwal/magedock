@@ -131,5 +131,8 @@ COPY bin/* /usr/local/bin/
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+ENTRYPOINT ["/usr/local/bin/docker-environment"]
+CMD ["/sbin/my_init"]
+
 # Set default work directory
 WORKDIR ${MAGENTO_ROOT}
