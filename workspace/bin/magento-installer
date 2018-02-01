@@ -23,7 +23,7 @@ fi
 
 echo "Running Magento 2 setup script..."
 
-php -d memory_limit=2G ./bin/magento-php setup:install \
+php -d memory_limit=2G ./bin/magento setup:install \
   --db-host="mysql" \
   --db-name=$MYSQL_DATABASE \
   --db-user=$MYSQL_USER \
