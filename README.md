@@ -3,6 +3,8 @@ Magedock
 Magedock helps you run your magento on Docker real quick. 
 It's like laradock but for Magento instead of Laravel.
 
+Help to work with 2.3.x -> https://digitalstartup.co.uk/t/how-to-install-magento-2-3-and-build-a-web-server/263#chapter3
+
 ## Installation
 
 Let's see how easy it is to install `NGINX`, `PHP`, `Composer`, `MySQL` and `Redis`. Then run `Magento`.
